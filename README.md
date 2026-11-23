@@ -10,8 +10,8 @@
 - **Student Name:** Utkarsh Patwa
 - **Roll Number / UID:** 89
 - **Assigned Problem Statement Number:** P9
-- **Live Vercel Deployment Link:** [https://utkarshpatwa-midsem-phase2.vercel.app](https://utkarshpatwa-midsem-phase2.vercel.app) *(Replace with your live Vercel URL)*
-- **GitHub Repository Link:** [https://github.com/utkarshpatwa393-sys/utkarshpatwa-midsem-phase2](https://github.com/utkarshpatwa393-sys/utkarshpatwa-midsem-phase2)
+- **Live Vercel Deployment Link:** [https://ass-7-web.vercel.app](https://ass-7-web.vercel.app) *(Replace with your live Vercel URL)*
+- **GitHub Repository Link:** [https://github.com/utkarshpatwa393-sys/ASS-7-WEB](https://github.com/utkarshpatwa393-sys/ASS-7-WEB)
 
 ---
 
