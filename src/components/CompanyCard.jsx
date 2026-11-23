@@ -1,22 +1,21 @@
 import React from 'react';
 import { Link } from 'react-router';
 
-// Reusable CompanyCard component
 function CompanyCard({ company, myProfile, onToggleApply }) {
-  // Check eligibility rule: cgpa >= minCGPA and eligibleBranches includes myProfile.branch
+  // check eligibility
   const isEligible =
     myProfile.cgpa >= company.minCGPA &&
     company.eligibleBranches.includes(myProfile.branch);
 
-  // Check dream company: packageLPA >= 10
+  // check dream company
   const isDream = company.packageLPA >= 10;
 
   return (
     <div className="company-card">
-      <div className="card-top">
-        <h3 className="company-name">{company.name}</h3>
-        <div className="badges-container">
-          {isDream && <span className="badge badge-dream">⭐ Dream Company</span>}
+      <div className="card-header">
+        <h3>{company.name}</h3>
+        <div>
+          {isDream && <span className="badge badge-dream">Dream Company</span>}
           {isEligible ? (
             <span className="badge badge-eligible">Eligible</span>
           ) : (
@@ -25,27 +24,25 @@ function CompanyCard({ company, myProfile, onToggleApply }) {
         </div>
       </div>
 
-      <div className="card-details">
-        <p><strong>Role:</strong> {company.role}</p>
-        <p><strong>Package:</strong> {company.packageLPA} LPA</p>
-        <p><strong>Location:</strong> {company.location}</p>
-        <p><strong>Drive Date:</strong> {company.driveDate}</p>
-      </div>
+      <p><b>Role:</b> {company.role}</p>
+      <p><b>Package:</b> {company.packageLPA} LPA</p>
+      <p><b>Location:</b> {company.location}</p>
+      <p><b>Drive Date:</b> {company.driveDate}</p>
 
-      <div className="card-actions">
-        <Link to={`/companies/${company.id}`} className="btn btn-details">
+      <div className="card-buttons">
+        <Link to={`/companies/${company.id}`} className="details-link">
           View Details
         </Link>
 
         {isEligible ? (
           <button
-            className={`btn ${company.isApplied ? 'btn-withdraw' : 'btn-apply'}`}
+            className={company.isApplied ? 'withdraw-btn' : 'apply-btn'}
             onClick={() => onToggleApply(company.id)}
           >
             {company.isApplied ? 'Withdraw' : 'Apply'}
           </button>
         ) : (
-          <span className="text-not-eligible">Not Eligible</span>
+          <span className="not-eligible-text">Not Eligible</span>
         )}
       </div>
     </div>

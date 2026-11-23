@@ -9,41 +9,32 @@ import { companiesData, myProfile } from './data/companies';
 import './App.css';
 
 function App() {
-  // Main application state maintained in App.jsx using useState
+  // state for all companies
   const [companies, setCompanies] = useState(companiesData);
 
-  // Action function to toggle Apply <-> Withdraw
-  const handleToggleApply = (companyId) => {
-    setCompanies((prevCompanies) =>
-      prevCompanies.map((company) => {
-        if (company.id === companyId) {
-          // Special rule: only eligible companies can be applied to
-          const isEligible =
-            myProfile.cgpa >= company.minCGPA &&
-            company.eligibleBranches.includes(myProfile.branch);
+  // function to apply or withdraw from a company
+  function handleToggleApply(id) {
+    const updated = companies.map((comp) => {
+      if (comp.id === id) {
+        // toggle isApplied only for this company
+        return {
+          ...comp,
+          isApplied: !comp.isApplied
+        };
+      }
+      return comp;
+    });
+    setCompanies(updated);
+  }
 
-          if (isEligible) {
-            return {
-              ...company,
-              isApplied: !company.isApplied,
-            };
-          }
-        }
-        return company;
-      })
-    );
-  };
-
-  // Calculate live count of applied companies for Navbar
+  // count of applied companies
   const appliedCount = companies.filter((c) => c.isApplied).length;
 
   return (
-    <div className="app">
-      {/* Navigation Bar with live count */}
+    <div>
       <Navbar appliedCount={appliedCount} />
 
-      {/* Main Content Area with Routes */}
-      <main className="main-content">
+      <div className="main-content">
         <Routes>
           <Route
             path="/"
@@ -80,12 +71,11 @@ function App() {
             }
           />
         </Routes>
-      </main>
+      </div>
 
-      {/* Basic Footer */}
-      <footer className="footer">
-        <p>Campus Placement Drive Portal • WEB 301 Assignment 7 (P9)</p>
-      </footer>
+      <div className="footer">
+        <p>Campus Placement Drive Portal | WEB 301</p>
+      </div>
     </div>
   );
 }

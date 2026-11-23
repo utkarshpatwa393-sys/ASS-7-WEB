@@ -1,28 +1,26 @@
 import React, { useState } from 'react';
 import CompanyCard from '../components/CompanyCard';
 
-// Companies page: displays searchable and filterable company list
 function Companies({ companies, myProfile, onToggleApply }) {
-  // Controlled input states for search and filter dropdown
   const [searchTerm, setSearchTerm] = useState('');
   const [filterType, setFilterType] = useState('All');
 
-  // Filter companies using filter()
   const filteredCompanies = companies.filter((company) => {
-    // Check search term against company name and role
+    // search filter
     const matchesSearch =
       company.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       company.role.toLowerCase().includes(searchTerm.toLowerCase());
 
-    // Check eligibility rule
+    // eligibility check
     const isEligible =
       myProfile.cgpa >= company.minCGPA &&
       company.eligibleBranches.includes(myProfile.branch);
 
-    // Apply dropdown filter: All, Eligible, Not Eligible
+    // dropdown filter
     if (filterType === 'Eligible') {
       return matchesSearch && isEligible;
-    } else if (filterType === 'Not Eligible') {
+    }
+    if (filterType === 'Not Eligible') {
       return matchesSearch && !isEligible;
     }
 
@@ -30,33 +28,24 @@ function Companies({ companies, myProfile, onToggleApply }) {
   });
 
   return (
-    <div className="container">
-      <div className="page-header">
-        <h2>All Visiting Companies</h2>
-        <p className="subtitle">
-          Browse companies visiting the campus, filter by your eligibility, and apply directly.
-        </p>
-      </div>
+    <div className="page-box">
+      <h2>Companies List</h2>
 
-      {/* Search and Dropdown Filter Bar */}
-      <div className="filter-bar">
-        <div className="filter-group">
-          <label htmlFor="search">Search: </label>
+      {/* Search and Dropdown Filter */}
+      <div className="filter-controls">
+        <label>
+          Search:{' '}
           <input
-            id="search"
             type="text"
-            className="input-text"
-            placeholder="Search by company or role..."
+            placeholder="Search company or role..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
-        </div>
+        </label>
 
-        <div className="filter-group">
-          <label htmlFor="filter">Filter: </label>
+        <label style={{ marginLeft: '15px' }}>
+          Filter:{' '}
           <select
-            id="filter"
-            className="select-dropdown"
             value={filterType}
             onChange={(e) => setFilterType(e.target.value)}
           >
@@ -64,11 +53,11 @@ function Companies({ companies, myProfile, onToggleApply }) {
             <option value="Eligible">Eligible</option>
             <option value="Not Eligible">Not Eligible</option>
           </select>
-        </div>
+        </label>
       </div>
 
-      {/* Companies List */}
-      <div className="cards-grid">
+      {/* List of cards */}
+      <div className="company-list">
         {filteredCompanies.length > 0 ? (
           filteredCompanies.map((company) => (
             <CompanyCard
@@ -79,7 +68,7 @@ function Companies({ companies, myProfile, onToggleApply }) {
             />
           ))
         ) : (
-          <p className="no-data-msg">No companies found matching your search or filter.</p>
+          <p>No companies found.</p>
         )}
       </div>
     </div>
