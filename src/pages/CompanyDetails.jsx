@@ -2,13 +2,10 @@ import React from 'react';
 import { useParams, Link } from 'react-router';
 
 function CompanyDetails({ companies, myProfile, onToggleApply }) {
-  // Get the company id from URL: /companies/:id
   const { id } = useParams();
 
-  // Find the company in the list by matching id
   const company = companies.find((comp) => comp.id === Number(id));
 
-  // If company is not found
   if (!company) {
     return (
       <div className="page-box">
@@ -18,12 +15,9 @@ function CompanyDetails({ companies, myProfile, onToggleApply }) {
     );
   }
 
-  // Check eligibility conditions
   const hasGoodCgpa = myProfile.cgpa >= company.minCGPA;
   const hasValidBranch = company.eligibleBranches.includes(myProfile.branch);
   const isEligible = hasGoodCgpa && hasValidBranch;
-
-  // Check dream company
   const isDream = company.packageLPA >= 10;
 
   return (
@@ -38,10 +32,8 @@ function CompanyDetails({ companies, myProfile, onToggleApply }) {
         <p><b>Drive Date:</b> {company.driveDate}</p>
         <p><b>Minimum CGPA Required:</b> {company.minCGPA}</p>
 
-        {/* Dream Company Badge */}
         {isDream && <p><span className="badge badge-dream">Dream Company</span></p>}
 
-        {/* Eligibility Status */}
         <p>
           <b>Eligibility Status: </b>
           {isEligible ? (
@@ -51,7 +43,6 @@ function CompanyDetails({ companies, myProfile, onToggleApply }) {
           )}
         </p>
 
-        {/* Eligible Branches mapped with map() */}
         <h3>Eligible Branches:</h3>
         <ul>
           {company.eligibleBranches.map((branch, index) => {
@@ -64,11 +55,9 @@ function CompanyDetails({ companies, myProfile, onToggleApply }) {
           })}
         </ul>
 
-        {/* Job Description */}
         <h3>Description:</h3>
         <p>{company.description}</p>
 
-        {/* Action Button: Apply/Withdraw for eligible, or text for not eligible */}
         <div style={{ marginTop: '20px' }}>
           {isEligible ? (
             <button

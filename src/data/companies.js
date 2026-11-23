@@ -1,5 +1,3 @@
-// Dataset for P9 - Campus Placement Drive
-
 export const myProfile = {
   name: "Utkarsh Patwa",
   branch: "CSE",

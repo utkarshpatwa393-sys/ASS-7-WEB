@@ -1,18 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router';
 
-// Reusable card for a single company
 function CompanyCard({ company, myProfile, onToggleApply }) {
-  // Step 1: Check CGPA condition
   const hasGoodCgpa = myProfile.cgpa >= company.minCGPA;
-
-  // Step 2: Check Branch condition
   const hasValidBranch = company.eligibleBranches.includes(myProfile.branch);
-
-  // Step 3: Company is Eligible ONLY if both CGPA and Branch match
   const isEligible = hasGoodCgpa && hasValidBranch;
-
-  // Step 4: Dream company badge if package is 10 LPA or higher
   const isDream = company.packageLPA >= 10;
 
   return (
@@ -20,7 +12,6 @@ function CompanyCard({ company, myProfile, onToggleApply }) {
       <div className="card-header">
         <h3>{company.name}</h3>
 
-        {/* Badges */}
         <div>
           {isDream && <span className="badge badge-dream">Dream Company</span>}
           {isEligible ? (
@@ -31,19 +22,16 @@ function CompanyCard({ company, myProfile, onToggleApply }) {
         </div>
       </div>
 
-      {/* Company Info */}
       <p><b>Role:</b> {company.role}</p>
       <p><b>Package:</b> {company.packageLPA} LPA</p>
       <p><b>Location:</b> {company.location}</p>
       <p><b>Drive Date:</b> {company.driveDate}</p>
 
-      {/* Actions */}
       <div className="card-buttons">
         <Link to={`/companies/${company.id}`} className="details-link">
           View Details
         </Link>
 
-        {/* If eligible: show Apply/Withdraw button. If not eligible: show text */}
         {isEligible ? (
           <button
             className={company.isApplied ? 'withdraw-btn' : 'apply-btn'}
