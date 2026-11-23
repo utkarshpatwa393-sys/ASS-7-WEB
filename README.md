@@ -11,7 +11,7 @@
 - **Roll Number / UID:** 89
 - **Assigned Problem Statement Number:** P9
 - **Live Vercel Deployment Link:** [https://utkarshpatwa-midsem-phase2.vercel.app](https://utkarshpatwa-midsem-phase2.vercel.app) *(Replace with your live Vercel URL)*
-- **GitHub Repository Link:** [https://github.com/utkarshpatwa/utkarshpatwa-midsem-phase2](https://github.com/utkarshpatwa/utkarshpatwa-midsem-phase2)
+- **GitHub Repository Link:** [https://github.com/utkarshpatwa393-sys/utkarshpatwa-midsem-phase2](https://github.com/utkarshpatwa393-sys/utkarshpatwa-midsem-phase2)
 
 ---
 
