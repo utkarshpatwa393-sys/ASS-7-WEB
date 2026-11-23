@@ -3,18 +3,21 @@ import { Link } from 'react-router';
 import CompanyCard from '../components/CompanyCard';
 
 function Applications({ companies, myProfile, onToggleApply }) {
-  // filter applied companies
-  const appliedCompanies = companies.filter((c) => c.isApplied);
+  // Get all companies where isApplied is true
+  const appliedCompanies = companies.filter((company) => company.isApplied === true);
 
   return (
     <div className="page-box">
       <h2>My Applications</h2>
 
+      {/* If no companies applied yet */}
       {appliedCompanies.length === 0 ? (
         <div>
           <h3>No applications yet</h3>
-          <p>You have not applied to any companies.</p>
-          <Link to="/companies">View Companies</Link>
+          <p>You have not applied to any companies so far.</p>
+          <Link to="/companies" className="btn-link">
+            View Companies
+          </Link>
         </div>
       ) : (
         <div className="company-list">

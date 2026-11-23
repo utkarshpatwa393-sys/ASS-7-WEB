@@ -2,21 +2,25 @@ import React, { useState } from 'react';
 import CompanyCard from '../components/CompanyCard';
 
 function Companies({ companies, myProfile, onToggleApply }) {
+  // State for search input
   const [searchTerm, setSearchTerm] = useState('');
+
+  // State for dropdown filter: 'All', 'Eligible', 'Not Eligible'
   const [filterType, setFilterType] = useState('All');
 
+  // Filter companies based on search input and dropdown
   const filteredCompanies = companies.filter((company) => {
-    // search filter
-    const matchesSearch =
-      company.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      company.role.toLowerCase().includes(searchTerm.toLowerCase());
+    // 1. Search filter: check company name or role
+    const nameMatch = company.name.toLowerCase().includes(searchTerm.toLowerCase());
+    const roleMatch = company.role.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesSearch = nameMatch || roleMatch;
 
-    // eligibility check
-    const isEligible =
-      myProfile.cgpa >= company.minCGPA &&
-      company.eligibleBranches.includes(myProfile.branch);
+    // 2. Eligibility filter
+    const cgpaOk = myProfile.cgpa >= company.minCGPA;
+    const branchOk = company.eligibleBranches.includes(myProfile.branch);
+    const isEligible = cgpaOk && branchOk;
 
-    // dropdown filter
+    // 3. Dropdown filter logic
     if (filterType === 'Eligible') {
       return matchesSearch && isEligible;
     }
@@ -24,20 +28,21 @@ function Companies({ companies, myProfile, onToggleApply }) {
       return matchesSearch && !isEligible;
     }
 
-    return matchesSearch; // All
+    // If filterType is 'All'
+    return matchesSearch;
   });
 
   return (
     <div className="page-box">
-      <h2>Companies List</h2>
+      <h2>All Companies</h2>
 
-      {/* Search and Dropdown Filter */}
+      {/* Search and Filter Controls */}
       <div className="filter-controls">
         <label>
           Search:{' '}
           <input
             type="text"
-            placeholder="Search company or role..."
+            placeholder="Type company or role..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
@@ -56,7 +61,7 @@ function Companies({ companies, myProfile, onToggleApply }) {
         </label>
       </div>
 
-      {/* List of cards */}
+      {/* List of Companies */}
       <div className="company-list">
         {filteredCompanies.length > 0 ? (
           filteredCompanies.map((company) => (

@@ -2,11 +2,13 @@ import React from 'react';
 import { useParams, Link } from 'react-router';
 
 function CompanyDetails({ companies, myProfile, onToggleApply }) {
+  // Get the company id from URL: /companies/:id
   const { id } = useParams();
 
-  // find company by id
-  const company = companies.find((c) => String(c.id) === String(id));
+  // Find the company in the list by matching id
+  const company = companies.find((comp) => comp.id === Number(id));
 
+  // If company is not found
   if (!company) {
     return (
       <div className="page-box">
@@ -16,11 +18,12 @@ function CompanyDetails({ companies, myProfile, onToggleApply }) {
     );
   }
 
-  // check eligibility
-  const isEligible =
-    myProfile.cgpa >= company.minCGPA &&
-    company.eligibleBranches.includes(myProfile.branch);
+  // Check eligibility conditions
+  const hasGoodCgpa = myProfile.cgpa >= company.minCGPA;
+  const hasValidBranch = company.eligibleBranches.includes(myProfile.branch);
+  const isEligible = hasGoodCgpa && hasValidBranch;
 
+  // Check dream company
   const isDream = company.packageLPA >= 10;
 
   return (
@@ -33,10 +36,12 @@ function CompanyDetails({ companies, myProfile, onToggleApply }) {
         <p><b>Package:</b> {company.packageLPA} LPA</p>
         <p><b>Location:</b> {company.location}</p>
         <p><b>Drive Date:</b> {company.driveDate}</p>
-        <p><b>Minimum CGPA:</b> {company.minCGPA}</p>
+        <p><b>Minimum CGPA Required:</b> {company.minCGPA}</p>
 
+        {/* Dream Company Badge */}
         {isDream && <p><span className="badge badge-dream">Dream Company</span></p>}
 
+        {/* Eligibility Status */}
         <p>
           <b>Eligibility Status: </b>
           {isEligible ? (
@@ -46,18 +51,24 @@ function CompanyDetails({ companies, myProfile, onToggleApply }) {
           )}
         </p>
 
+        {/* Eligible Branches mapped with map() */}
         <h3>Eligible Branches:</h3>
         <ul>
-          {company.eligibleBranches.map((branch, index) => (
-            <li key={index}>
-              {branch} {branch === myProfile.branch ? '(Your Branch)' : ''}
-            </li>
-          ))}
+          {company.eligibleBranches.map((branch, index) => {
+            return (
+              <li key={index}>
+                {branch}
+                {branch === myProfile.branch ? ' (Your Branch)' : ''}
+              </li>
+            );
+          })}
         </ul>
 
+        {/* Job Description */}
         <h3>Description:</h3>
         <p>{company.description}</p>
 
+        {/* Action Button: Apply/Withdraw for eligible, or text for not eligible */}
         <div style={{ marginTop: '20px' }}>
           {isEligible ? (
             <button
